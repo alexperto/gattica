@@ -199,14 +199,10 @@ module Gattica
         output += "&start-index=#{start_index}"
       end
       unless args[:dimensions].empty?
-        output += '&dimensions=' + args[:dimensions].collect do |dimension|
-          "ga:#{dimension}"
-        end.join(',')
+        output += '&dimensions=' + args[:dimensions].map{ |c| c.include?(':') ? c : "ga:#{c}" }.join(',')
       end
       unless args[:metrics].empty?
-        output += '&metrics=' + args[:metrics].collect do |metric|
-          "ga:#{metric}"
-        end.join(',')
+        output += '&metrics=' + args[:metrics].map{ |c| c.include?(':') ? c : "ga:#{c}" }.join(',')
       end
       unless args[:sort].empty?
         output += '&sort=' + args[:sort].collect do |sort|
